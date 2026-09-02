@@ -1,0 +1,48 @@
+<html>
+<head>
+<script>
+function init(){
+    var sec=location.search;
+    var bg=document.getElementById("body");
+    var ft=document.getElementById("time");
+    if(/^\?[0-9]+$/.test(sec)){
+        if(confirm("ready...")){
+        }else{
+            return;
+        }
+    }else{
+        alert("Error:Parameter is not Number."+sec);
+        return;
+    }
+
+    sec=parseInt(sec.match(/^\?([0-9]+)$/)[1]);
+
+    var limitTime=(new Date()).getTime()+sec*1000;
+
+    setInterval(function(_bg,_ft,_limitTime){
+        var bg=_bg;
+        var ft=_ft;
+        var limitTime=_limitTime;
+        return function(){
+            var nowTime=(new Date()).getTime();
+            var restTime=limitTime-nowTime;
+            if(false){
+            }else if(restTime>60000){
+                bg.style.backgroundColor="#ffffff";
+            }else if(restTime>0){
+                bg.style.backgroundColor="#ffff00";
+            }else{
+                bg.style.backgroundColor="#ff0000";
+            }
+            ft.innerHTML=Math.floor(Math.abs(restTime/60000))+":"+(("00"+(Math.floor(Math.abs(restTime/1000)%60))).slice(-2));
+        }
+    }(bg,ft,limitTime),100);
+
+}
+window.onload=init
+</script>
+</head>
+<body id="body">
+<div id="time" style="font-size:360px;text-align:center;height:100%;vertical-align:middle;"></div>
+</body>
+</html>
